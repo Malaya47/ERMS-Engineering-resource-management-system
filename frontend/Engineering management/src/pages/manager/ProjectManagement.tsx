@@ -67,7 +67,12 @@ export default function ProjectManagement() {
     setValue("description", project.description);
     setValue("startDate", project.startDate.slice(0, 10));
     setValue("endDate", project.endDate.slice(0, 10));
-    setValue("requiredSkills", project.requiredSkills.join(", "));
+    setValue(
+      "requiredSkills",
+      Array.isArray(project.requiredSkills)
+        ? project.requiredSkills.join(", ")
+        : project.requiredSkills
+    );
     setValue("teamSize", project.teamSize);
     setValue("status", project.status);
 
