@@ -204,14 +204,15 @@ export default function ProjectManagement() {
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-2 border-none">
-                      {proj.requiredSkills.map((skill, index) => (
-                        <span
-                          key={index}
-                          className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                      {Array.isArray(proj.requiredSkills) &&
+                        proj.requiredSkills.map((skill, index) => (
+                          <span
+                            key={index}
+                            className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
+                          >
+                            {skill}
+                          </span>
+                        ))}
                     </div>
 
                     <p className="text-sm text-gray-500 mt-2 border-none">
