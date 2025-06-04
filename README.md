@@ -22,6 +22,25 @@ A full-stack web application for managing engineering team capacity, project ass
 
 ## 🚀 Features
 
+🧪 Demo Login Credentials
+Use these pre-seeded credentials to explore the platform:
+
+👩‍💼 Manager
+
+| Field        | Value                 |
+| ------------ | --------------------- |
+| **Email**    | `manager@example.com` |
+| **Password** | `password123`         |
+
+
+👨‍🔧 Engineer
+
+| Field        | Value               |
+| ------------ | ------------------- |
+| **Email**    | `alice@example.com` |
+| **Password** | `password123`       |
+
+
 ### 👤 Authentication
 - JWT-based secure login
 - Role-based dashboard routing (`Manager`, `Engineer`)
