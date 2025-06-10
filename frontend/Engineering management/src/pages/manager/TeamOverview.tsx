@@ -40,8 +40,9 @@ export default function TeamOverview() {
 
       <div className="space-y-4 border-0">
         {engineers.map((eng) => {
-          const allocated = capacityMap[eng._id] ?? 0;
-          const available = eng.maxCapacity - allocated;
+          const rawAllocated = capacityMap[eng._id] ?? 0;
+          const allocated = Math.min(rawAllocated, eng.maxCapacity);
+          const available = Math.max(eng.maxCapacity - allocated, 0);
 
           return (
             <div

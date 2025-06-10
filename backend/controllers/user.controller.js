@@ -23,11 +23,11 @@ exports.getEngineerCapacity = async (req, res) => {
     endDate: { $gte: new Date() },
   });
 
-  const totalAllocated = assignments.reduce(
-    (sum, a) => sum + a.allocationPercentage,
-    0
-  );
-  const available = engineer.maxCapacity - totalAllocated;
+  if (totalAllocated > engineer.maxCapacity) {
+    totalAllocated = engineer.maxCapacity;
+  }
+
+  const available = Math.max(engineer.maxCapacity - totalAllocated, 0);
 
   res.json({ totalAllocated, available });
 };

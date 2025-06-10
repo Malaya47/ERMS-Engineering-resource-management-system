@@ -17,10 +17,10 @@ const seed = async () => {
     await Project.deleteMany();
     await Assignment.deleteMany();
 
-    // Password hashing
+    // Hash password
     const hashedPassword = await bcrypt.hash("password123", 10);
 
-    // Create Users
+    // Seed engineers
     const engineers = await User.insertMany([
       {
         name: "Alice Engineer",
@@ -39,7 +39,7 @@ const seed = async () => {
         role: "engineer",
         skills: ["Python", "Django"],
         seniority: "senior",
-        maxCapacity: 100,
+        maxCapacity: 60, // Part-time
         department: "Backend",
       },
       {
@@ -49,11 +49,22 @@ const seed = async () => {
         role: "engineer",
         skills: ["Node.js", "MongoDB"],
         seniority: "junior",
-        maxCapacity: 50,
+        maxCapacity: 80,
         department: "Fullstack",
+      },
+      {
+        name: "Daisy DevOps",
+        email: "daisy@example.com",
+        password: hashedPassword,
+        role: "engineer",
+        skills: ["AWS", "Terraform", "Docker"],
+        seniority: "senior",
+        maxCapacity: 100,
+        department: "DevOps",
       },
     ]);
 
+    // Seed manager
     const manager = await User.create({
       name: "Mandy Manager",
       email: "manager@example.com",
@@ -62,7 +73,7 @@ const seed = async () => {
       department: "Management",
     });
 
-    // Create Projects
+    // Seed projects
     const projects = await Project.insertMany([
       {
         name: "Project Atlas",
@@ -94,9 +105,19 @@ const seed = async () => {
         status: "planning",
         managerId: manager._id,
       },
+      {
+        name: "Project Orbit",
+        description: "Infrastructure automation for CI/CD",
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 50),
+        requiredSkills: ["Docker", "Terraform", "AWS"],
+        teamSize: 2,
+        status: "active",
+        managerId: manager._id,
+      },
     ]);
 
-    // Create Assignments
+    // Seed assignments
     await Assignment.insertMany([
       {
         engineerId: engineers[0]._id,
@@ -109,25 +130,65 @@ const seed = async () => {
       {
         engineerId: engineers[1]._id,
         projectId: projects[1]._id,
-        allocationPercentage: 80,
+        allocationPercentage: 60,
         startDate: new Date(),
         endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-        role: "Backend Lead",
+        role: "Backend Engineer",
       },
       {
         engineerId: engineers[2]._id,
         projectId: projects[2]._id,
+        allocationPercentage: 40,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 25),
+        role: "Support Engineer",
+      },
+      {
+        engineerId: engineers[3]._id,
+        projectId: projects[3]._id,
+        allocationPercentage: 100,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 50),
+        role: "DevOps Engineer",
+      },
+      {
+        engineerId: engineers[0]._id,
+        projectId: projects[1]._id,
+        allocationPercentage: 30,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 15),
+        role: "Frontend Consultant",
+      },
+      {
+        engineerId: engineers[2]._id,
+        projectId: projects[0]._id,
+        allocationPercentage: 30,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 20),
+        role: "Junior Developer",
+      },
+      {
+        engineerId: engineers[1]._id,
+        projectId: projects[3]._id,
+        allocationPercentage: 40,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+        role: "Backend Support",
+      },
+      {
+        engineerId: engineers[3]._id,
+        projectId: projects[2]._id,
         allocationPercentage: 50,
         startDate: new Date(),
         endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
-        role: "Support Engineer",
+        role: "Infra Advisor",
       },
     ]);
 
-    console.log("🌱 Seed data inserted!");
-    process.exit();
+    console.log("🌱 Seed data inserted successfully!");
+    process.exit(0);
   } catch (err) {
-    console.error(err);
+    console.error("❌ Seeding failed:", err);
     process.exit(1);
   }
 };
